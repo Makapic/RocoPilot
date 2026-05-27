@@ -56,8 +56,10 @@ def _load_pet_detector():
     if "config" in sys.modules:
         del sys.modules["config"]
     try:
+        from config import CONFIG
+        _model = globals().get("_CRUISE_PET_MODEL", "xueren")
+        CONFIG.pet_model_name = _model
         from core.pet_detector import PetDetector
-        # 预导入所有依赖 CONFIG 的模块，避免后续在 SIFT config 环境下导入时失败
         import core.window   # noqa: F401 — _screen_rect 需要
         import core.capture  # noqa: F401 — _scan_for_pets 需要
         import core.input    # noqa: F401 — _ensure_interception / click_at 需要
@@ -881,6 +883,15 @@ def _save_region(mreg: dict):
 
 if __name__ == "__main__":
     import json
+
+    # 解析 --pet-model 参数（由主进程传递），存入全局变量供 _load_pet_detector 使用
+    for i, arg in enumerate(sys.argv):
+        if arg == "--pet-model" and i + 1 < len(sys.argv):
+            _CRUISE_PET_MODEL = sys.argv[i + 1]
+            break
+    else:
+        _CRUISE_PET_MODEL = "xueren"
+    print(f"[Cruise] 精灵模型: {_CRUISE_PET_MODEL}")
 
     # 检查是否有上次保存的小地图位置
     saved = _load_saved_region()

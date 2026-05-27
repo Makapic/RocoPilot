@@ -110,21 +110,25 @@ class AutoCruiseMode(AutoBallPetMode):
         # 清理可能残留的暂停标志（上次异常退出遗留）
         self._set_cruise_pause(False)
 
+        # 将用户选择的精灵模型传递给子进程
+        from config import CONFIG
+        pet_model = CONFIG.pet_model_name
+
         if getattr(sys, "frozen", False):
             # Frozen: launch self as subprocess with --cruise flag
             exe_dir = os.path.dirname(os.path.abspath(sys.executable))
-            cmd = [sys.executable, "--cruise"]
+            cmd = [sys.executable, "--cruise", "--pet-model", pet_model]
             cwd = exe_dir
-            print(f"[{_ts()}] 启动巡航系统 (frozen): {sys.executable} --cruise")
+            print(f"[{_ts()}] 启动巡航系统 (frozen): {sys.executable} --cruise --pet-model {pet_model}")
         else:
             cruise_script = self._find_cruise_script()
             if cruise_script is None:
                 print(f"[{_ts()}] 错误：未找到 cruise_main.py")
                 return
             python_exe = self._find_python()
-            cmd = [python_exe, cruise_script]
+            cmd = [python_exe, cruise_script, "--pet-model", pet_model]
             cwd = os.path.dirname(cruise_script)
-            print(f"[{_ts()}] 启动巡航系统: {python_exe} {cruise_script}")
+            print(f"[{_ts()}] 启动巡航系统: {python_exe} {cruise_script} --pet-model {pet_model}")
 
         try:
             self._cruise_process = subprocess.Popen(cmd, cwd=cwd)
