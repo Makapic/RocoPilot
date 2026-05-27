@@ -96,8 +96,9 @@ uv sync --extra pet
 | 文件 | 说明 | 仓库包含 |
 |------|------|----------|
 | `models/xueren.pt` | 雪人精灵检测模型 | 是（20 MB），可直接使用 |
+| `models/huolong.pt` | 火龙精灵检测模型 | 是（20 MB），可直接使用 |
+| `models/geli.pt` | 和平鸽 + 菊华梨检测模型 | 是（20 MB），可直接使用 |
 | `yolo26s.pt` | 预训练基础权重，用于训练新模型 | 是（20 MB） |
-| `models/huolong.pt` | 火龙模型 | 否，需自行训练 |
 
 启动时程序会列出 `models/` 下所有 `.pt` 文件供选择。其他精灵需自行训练（见下方教程）。
 
@@ -169,7 +170,7 @@ uv run main.py
 
 ## 精灵检测模型训练
 
-仓库仅提供 **xueren（雪人精灵）** 的预训练模型。如需检测其他精灵，按以下流程自行训练。
+仓库提供 **xueren（雪人）、huolong（火龙）、geli（和平鸽+菊华梨）** 的预训练模型。如需检测其他精灵，按以下流程自行训练。
 
 ### 数据准备
 
@@ -201,11 +202,14 @@ uv run main.py
 ### 训练
 
 ```powershell
-# 训练火龙模型（从 yolo26s.pt 预训练权重开始）
+# 训练火龙模型（从已有 huolong.pt 继续微调，扩充数据后使用）
 uv run python scripts/train_huolong.py
 
 # 训练雪人模型（从已有 xueren.pt 继续微调）
 uv run python scripts/train_xueren.py
+
+# 训练 geli 双物种模型（从 yolo26s.pt 预训练权重开始）
+uv run python scripts/train_geli.py
 ```
 
 训练完成后模型自动复制到 `models/<精灵名>.pt`，启动 main.py 时即可选择。
@@ -219,6 +223,7 @@ uv run python scripts/train_xueren.py
 ```powershell
 uv run python scripts/detect_xueren.py    # 测试雪人模型
 uv run python scripts/detect_huolong.py   # 测试火龙模型
+uv run python scripts/detect_geli.py      # 测试 geli 模型（和平鸽+菊华梨）
 ```
 
 会弹出透明悬浮窗，在游戏画面上叠加检测框，用于验证模型效果。
