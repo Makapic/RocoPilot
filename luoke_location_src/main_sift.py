@@ -135,6 +135,17 @@ class SiftMapTrackerApp:
         self.root.attributes("-topmost", True)
         self.root.geometry(config.WINDOW_GEOMETRY)
 
+        # Show canvas immediately with loading message before heavy init
+        self.canvas = tk.Canvas(
+            root, width=config.VIEW_SIZE, height=config.VIEW_SIZE, bg="#1a1a2e"
+        )
+        self.canvas.pack(fill=tk.BOTH, expand=True)
+        self.canvas.create_text(
+            config.VIEW_SIZE // 2, config.VIEW_SIZE // 2,
+            text="Loading...", fill="#ffffff", font=("Microsoft YaHei UI", 14),
+        )
+        root.update_idletasks()
+
         self.last_x = None
         self.last_y = None
         self.lost_frames = 0
@@ -211,10 +222,7 @@ class SiftMapTrackerApp:
             minimap_region if minimap_region is not None else config.MINIMAP
         )
 
-        self.canvas = tk.Canvas(
-            root, width=config.VIEW_SIZE, height=config.VIEW_SIZE, bg="#2b2b2b"
-        )
-        self.canvas.pack(fill=tk.BOTH, expand=True)
+        self.canvas.delete("all")
         self.image_on_canvas = None
         self._track_async_busy = False
         self._fps_last_t: float | None = None
