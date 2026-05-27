@@ -1,0 +1,6 @@
+# Large map overlays
+luoke_location_src/out/rocom_caiji_overlay.png filter=lfs diff=lfs merge=lfs -text
+luoke_location_src/out/rocom_poi_overlay.png filter=lfs diff=lfs merge=lfs -text
+# Model files
+yolo26s.pt filter=lfs diff=lfs merge=lfs -text
+models/xueren.pt filter=lfs diff=lfs merge=lfs -text

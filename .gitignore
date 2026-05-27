@@ -1,0 +1,68 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Runtime logs
+logs/
+*.log
+
+# Environment
+.venv/
+venv/
+env/
+.env
+.vscode/
+
+# Claude Code plans
+.claude/
+
+# Project specific
+*.new
+user_prefs.json
+
+# PyInstaller
+dist/
+build/
+
+run.bat
+template_debug/
+
+# Trained models and training artifacts
+models/*
+!models/xueren.pt
+runs/
+datasets/
+
+# PyTorch model files (large, download separately)
+# Exceptions: tracked models needed for training and detection
+*.pt
+!yolo26s.pt
+!models/xueren.pt
+
+# SIFT anchor cache (regenerable at runtime)
+luoke_location_src/out/sift_anchors_*.npz
+luoke_location_src/out/sift_track_profile.txt
+luoke_location_src/out/minimap_region.json
+luoke_location_src/out/icon_cache_*/
+
+# luoke_location_src large assets
+# Essential map data (tracked — required for cruise mode)
+luoke_location_src/out/*.png
+!luoke_location_src/out/rocom_caiji_overlay.png
+!luoke_location_src/out/rocom_poi_overlay.png
+luoke_location_src/out/*.json
+!luoke_location_src/out/rocom_points.json
+!luoke_location_src/out/rocom_caiji_points.json
+luoke_location_src/exe_files/
+luoke_location_src/examp_figs/
+luoke_location_src/point.json
+luoke_location_src/out/cruise_pause.flag
+
+# User-specific build artifacts
+RocoPilot.spec
+uac_admin.manifest

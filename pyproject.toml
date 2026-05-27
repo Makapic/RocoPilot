@@ -1,0 +1,32 @@
+[project]
+name = "rocopilot"
+version = "2.0.1"
+description = "洛克王国：世界 游戏自动化助手"
+requires-python = ">=3.11"
+dependencies = [
+    "opencv-python>=4.9.0.80",
+    "numpy>=1.26.4",
+    "mss>=9.0.1",
+    "pywin32>=306",
+    "interception-python",
+    "keyboard>=0.13.5",
+]
+
+[project.optional-dependencies]
+easyocr = [
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+    "easyocr",
+]
+pet = [
+    "ultralytics>=8.2.0",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu121"
+url = "https://mirror.sjtu.edu.cn/pytorch-wheels/cu121"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu121" }
+torchvision = { index = "pytorch-cu121" }

@@ -1,0 +1,20 @@
+```text
+# 忽略 Python 缓存
+__pycache__/
+*.py[cod]
+
+# 忽略虚拟环境
+venv/
+env/
+
+# # 忽略巨型地图文件 (极其重要)
+# *.png
+# *.jpg
+# !img/    # 但是保留 img 文件夹里的小图标
+
+# 忽略调试生成的图片
+debug_minimap.png
+
+# 忽略 IDE 配置文件
+.idea/
+.vscode/
