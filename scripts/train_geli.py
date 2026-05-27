@@ -38,12 +38,21 @@ model.train(
     erasing=0.4,
 )
 
-# Copy trained model to models/
+# Find latest training run and copy best.pt
 os.makedirs(os.path.join(_BASE, "models"), exist_ok=True)
-src = os.path.join(_BASE, "runs", "detect", "train", "weights", "best.pt")
+runs_dir = os.path.join(_BASE, "runs", "detect")
+train_dirs = sorted(
+    [d for d in os.listdir(runs_dir) if d.startswith("train")],
+    key=lambda d: os.path.getmtime(os.path.join(runs_dir, d)),
+    reverse=True,
+)
 dst = os.path.join(_BASE, "models", "geli.pt")
-if os.path.exists(src):
-    shutil.copy2(src, dst)
-    print(f"\n训练完成！模型已保存: {dst}")
+if train_dirs:
+    src = os.path.join(runs_dir, train_dirs[0], "weights", "best.pt")
+    if os.path.exists(src):
+        shutil.copy2(src, dst)
+        print(f"\n训练完成！模型已保存: {dst} (来自 {train_dirs[0]})")
+    else:
+        print(f"\n训练完成！但未找到 {src}，请手动复制 best.pt")
 else:
-    print("\n训练完成！请手动将 best.pt 复制到 models/geli.pt")
+    print("\n训练完成！未找到训练输出目录，请手动将 best.pt 复制到 models/geli.pt")

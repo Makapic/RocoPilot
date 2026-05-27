@@ -23,13 +23,15 @@ class PetDetector:
             raise FileNotFoundError(
                 f"模型未找到: {model_path}，请先运行 scripts/train_xueren.py 训练模型"
             )
+        conf = CONFIG.pet_conf_thresholds.get(CONFIG.pet_model_name, 0.4)
         self._model = YOLO(model_path)
-        print(f"[PetDetector] 模型已加载: {CONFIG.pet_model_name} ({model_path}) (conf≥{CONFIG.pet_conf_threshold})")
+        print(f"[PetDetector] 模型已加载: {CONFIG.pet_model_name} ({model_path}) (conf≥{conf})")
 
     def detect(self, frame_bgr: np.ndarray) -> List[Tuple[int, int, int, int, float]]:
         """返回 [(cx, cy, w, h, conf), ...] 坐标均为像素坐标。"""
         self._ensure_model()
-        results = self._model(frame_bgr, verbose=False, conf=CONFIG.pet_conf_threshold)
+        conf = CONFIG.pet_conf_thresholds.get(CONFIG.pet_model_name, 0.4)
+        results = self._model(frame_bgr, verbose=False, conf=conf)
         detections = []
         for r in results:
             if r.boxes is None:

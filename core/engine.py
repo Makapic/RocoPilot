@@ -1,5 +1,7 @@
 import random
 import time as _time
+
+import cv2
 from typing import Dict, List, Tuple
 
 import win32gui

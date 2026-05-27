@@ -91,7 +91,7 @@ class AppConfig:
     # Pet detection mode.
     pet_model_dir: str = field(default_factory=lambda: os.path.join(_exe_dir(), "models"))
     pet_model_name: str = "xueren"
-    pet_conf_threshold: float = 0.4
+    pet_conf_thresholds: dict = field(default_factory=lambda: {"geli": 0.4})
     # Fixed-step iterative aiming: small uniform steps, fast cadence.
     pet_iterative_aim: bool = True
     pet_aim_step_px: int = 40                  # Fixed mouse pixels per step.
