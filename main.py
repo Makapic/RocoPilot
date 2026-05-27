@@ -1,4 +1,5 @@
 import os
+import sys
 
 from config import CONFIG, load_prefs, save_prefs
 from core.engine import Engine
@@ -96,7 +97,17 @@ def _select_pet_model(prefs: dict) -> str:
     return default
 
 
+def _run_cruise_subprocess() -> None:
+    """Entry point for cruise subprocess (launched by mode 3 when frozen)."""
+    from luoke_location_src.cruise_main import main as cruise_main
+    cruise_main()
+
+
 def main() -> None:
+    if "--cruise" in sys.argv:
+        _run_cruise_subprocess()
+        return
+
     prefs = load_prefs()
 
     # 恢复上次的精灵模型选择

@@ -110,21 +110,25 @@ class AutoCruiseMode(AutoBallPetMode):
         # 清理可能残留的暂停标志（上次异常退出遗留）
         self._set_cruise_pause(False)
 
-        cruise_script = self._find_cruise_script()
-        if cruise_script is None:
-            print(f"[{_ts()}] 错误：未找到 cruise_main.py")
-            return
-
-        python_exe = self._find_python()
-        print(f"[{_ts()}] 启动巡航系统: {python_exe} {cruise_script}")
+        if getattr(sys, "frozen", False):
+            # Frozen: launch self as subprocess with --cruise flag
+            exe_dir = os.path.dirname(os.path.abspath(sys.executable))
+            cmd = [sys.executable, "--cruise"]
+            cwd = exe_dir
+            print(f"[{_ts()}] 启动巡航系统 (frozen): {sys.executable} --cruise")
+        else:
+            cruise_script = self._find_cruise_script()
+            if cruise_script is None:
+                print(f"[{_ts()}] 错误：未找到 cruise_main.py")
+                return
+            python_exe = self._find_python()
+            cmd = [python_exe, cruise_script]
+            cwd = os.path.dirname(cruise_script)
+            print(f"[{_ts()}] 启动巡航系统: {python_exe} {cruise_script}")
 
         try:
-            # Popen 非阻塞，主进程继续 Engine 循环处理战斗
-            self._cruise_process = subprocess.Popen(
-                [python_exe, cruise_script],
-                cwd=os.path.dirname(cruise_script),
-            )
+            self._cruise_process = subprocess.Popen(cmd, cwd=cwd)
         except FileNotFoundError:
-            print(f"[{_ts()}] 错误：找不到Python解释器 {python_exe}")
+            print(f"[{_ts()}] 错误：找不到可执行文件 {cmd[0]}")
         except Exception as e:
             print(f"[{_ts()}] 启动巡航失败: {e}")

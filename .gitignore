@@ -35,6 +35,8 @@ template_debug/
 # Trained models and training artifacts
 models/*
 !models/xueren.pt
+!models/huolong.pt
+!models/geli.pt
 runs/
 datasets/
 
@@ -43,6 +45,8 @@ datasets/
 *.pt
 !yolo26s.pt
 !models/xueren.pt
+!models/huolong.pt
+!models/geli.pt
 
 # SIFT anchor cache (regenerable at runtime)
 luoke_location_src/out/sift_anchors_*.npz
