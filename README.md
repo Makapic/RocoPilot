@@ -10,6 +10,25 @@
 
 ---
 
+## 快速开始（EXE 免安装版）
+
+> 无需安装 Python 或任何依赖，下载即用。
+
+1. **安装 Interception 驱动**（必须，详见下方 [安装 Interception 驱动](#1-安装-interception-驱动)）
+2. 从 [Releases](https://github.com/Makapic/RocoPilot/releases) 页面下载最新的两个分卷文件：
+   - `RocoPilot.part1.zip`
+   - `RocoPilot.part2.zip`
+3. 合并分卷（在下载目录打开终端）：
+   ```cmd
+   copy /b RocoPilot.part1.zip + RocoPilot.part2.zip RocoPilot.zip
+   ```
+4. 解压 `RocoPilot.zip` 到任意目录
+5. **以管理员身份**运行 `RocoPilot.exe`
+
+> 首次启动模式 3 需生成 SIFT 锚点缓存（约 2-3 分钟），后续启动秒加载。
+
+---
+
 ## 运行环境
 
 > 以下为实测可用的环境配置。其他相近版本（如 Windows 10、Python 3.11、CUDA 11.8）通常也能正常运行。
