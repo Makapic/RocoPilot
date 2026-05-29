@@ -55,6 +55,17 @@ class Engine:
         self._mode = mode
         self._hwnd = hwnd
 
+        self._paused = False
+        self._paused_toggle = False
+        try:
+            import keyboard
+            keyboard.add_hotkey(CONFIG.pause_hotkey, self._on_pause_toggle)
+        except Exception:
+            pass
+
+    def _on_pause_toggle(self) -> None:
+        self._paused_toggle = True
+
     def run(self) -> None:
         print(f"[{_ts()}] 检测器已启动（模式: {self._mode.label}），按 Ctrl+C 退出。")
         log_mode_start(self._mode.label)
@@ -84,6 +95,18 @@ class Engine:
         pollute_count = 0
 
         while True:
+            if self._paused_toggle:
+                self._paused_toggle = False
+                self._paused = not self._paused
+                if self._paused:
+                    print(f"[{_ts()}] ⏸ 已暂停（按 {CONFIG.pause_hotkey.upper()} 继续）")
+                else:
+                    print(f"[{_ts()}] ▶ 已恢复")
+
+            if self._paused:
+                _time.sleep(0.1)
+                continue
+
             if self._hwnd is not None:
                 hwnd = self._hwnd
             else:

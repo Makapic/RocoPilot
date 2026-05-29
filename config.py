@@ -105,6 +105,7 @@ class AppConfig:
     pet_aim_calibrate: bool = True             # Auto-calibrate when pet_aim_pixels_per_unit == 0.
     pet_aim_calib_step: int = 200              # Mouse driver units for calibration move.
     # Runtime controls.
+    pause_hotkey: str = "f8"  # Hotkey to pause/resume the engine loop (keyboard library format)
 
 
 CONFIG = AppConfig()
