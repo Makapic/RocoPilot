@@ -37,6 +37,7 @@ models/*
 !models/xueren.pt
 !models/huolong.pt
 !models/geli.pt
+!models/youyingshu.pt
 runs/
 datasets/
 
@@ -47,6 +48,7 @@ datasets/
 !models/xueren.pt
 !models/huolong.pt
 !models/geli.pt
+!models/youyingshu.pt
 
 # SIFT anchor cache (regenerable at runtime)
 luoke_location_src/out/sift_anchors_*.npz
