@@ -117,6 +117,7 @@ uv sync --extra pet
 | `models/xueren.pt` | 雪人精灵检测模型 | 是（20 MB），可直接使用 |
 | `models/huolong.pt` | 火龙精灵检测模型 | 是（20 MB），可直接使用 |
 | `models/geli.pt` | 和平鸽 + 菊华梨检测模型 | 是（20 MB），可直接使用 |
+| `models/youyingshu.pt` | 幽影树精灵检测模型 | 是（20 MB），可直接使用 |
 | `yolo26s.pt` | 预训练基础权重，用于训练新模型 | 是（20 MB） |
 
 启动时程序会列出 `models/` 下所有 `.pt` 文件供选择。其他精灵需自行训练（见下方教程）。
@@ -191,7 +192,7 @@ uv run main.py
 
 ## 精灵检测模型训练
 
-仓库提供 **xueren（雪人）、huolong（火龙）、geli（和平鸽+菊华梨）** 的预训练模型。如需检测其他精灵，按以下流程自行训练。
+仓库提供 **xueren（雪人）、huolong（火龙）、geli（和平鸽+菊华梨）、youyingshu（幽影树）** 的预训练模型。如需检测其他精灵，按以下流程自行训练。
 
 ### 数据准备
 
